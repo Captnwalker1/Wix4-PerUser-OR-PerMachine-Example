@@ -1,0 +1,21 @@
+﻿<Project Sdk="WixToolset.Sdk/4.0.0-rc.3">
+  <PropertyGroup>
+    <CompiledAppDir>./Resources/</CompiledAppDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="WixToolset.Heat" Version="4.0.0-rc.3" />
+    <PackageReference Include="WixToolset.UI.wixext" Version="4.0.0-rc.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <HarvestDirectory Include="$(CompiledAppDir)">
+      <HarvestDirectoryPreprocessorVariable>CompiledAppDir</HarvestDirectoryPreprocessorVariable>
+      <ComponentGroupName>HarvestedComponents</ComponentGroupName>
+      <DirectoryRefId>APPLICATIONFOLDER</DirectoryRefId>
+      <SuppressRootDirectory>true</SuppressRootDirectory>
+    </HarvestDirectory>
+    <BindPath Include="$(CompiledAppDir)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="resources\test.txt" />
+  </ItemGroup>
+</Project>

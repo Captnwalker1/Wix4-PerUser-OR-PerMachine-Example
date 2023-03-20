@@ -1,0 +1,19 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+    <!--<StandardDirectory Id="ProgramFiles6432Folder">-->
+	  <!--<Directory Id="APPLICATIONFOLDER" Name="!(bind.Property.ProductName)">-->
+	  <!--<Directory Id="TARGETDIR" Name="SourceDir">-->
+		  <!--<StandardDirectory Id="ProgramFilesFolder">-->
+			  <Directory Id="APPLICATIONFOLDER" Name="MyPerMachineFolder" ComponentGuidGenerationSeed="150B0EC6-1A2A-49DD-BAE0-0BCA16724DD7">
+				  <!--<Directory Id="INSTALLFOLDER" ComponentGuidGenerationSeed="150B0EC6-1A2A-49DD-BAE0-0BCA16724DD7" />-->
+				  <!--<Component Id="test.txtcomponent">
+					<File Id="test.txt" Source="./Resources/test.txt" />
+				  </Component>-->
+			  </Directory>
+		  <!--</StandardDirectory>-->
+	  <!--</Directory>-->
+		  <!--<Directory Id="INSTALLFOLDER" Name="!(bind.Property.Manufacturer) !(bind.Property.ProductName)" />-->
+	  <!--</Directory>-->
+    <!--</StandardDirectory>-->
+  </Fragment>
+</Wix>

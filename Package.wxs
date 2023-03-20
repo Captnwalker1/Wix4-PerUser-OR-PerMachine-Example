@@ -1,0 +1,37 @@
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="WixPerUserOrMachine" Manufacturer="TODO Manufacturer" Version="1.0.0.0" UpgradeCode="c6508a33-1372-42d2-819e-e3d3c8164275">
+    <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
+
+    <Feature Id="Main">
+      <ComponentGroupRef Id="HarvestedComponents" />
+		<!--<ComponentRef Id="test.txtcomponent" />-->
+    </Feature>
+
+	<MediaTemplate EmbedCab="yes" CompressionLevel="high" />
+	  
+	<Property Id="ApplicationFolderName" Value="PerUserOrMachine-Example" />
+	<Property Id="WixAppFolder" Value="WixPerMachineFolder" />
+	<WixVariable Id="WixUISupportPerUser" Value="1" />
+	<WixVariable Id="WixUISupportPerMachine" Value="1" />
+
+	<CustomAction Id="CustomSetDefaultPerUserFolder" Property="CustomWixPerUserFolder" Value="[LocalAppDataFolder]Programs\[ApplicationFolderName]" Execute="immediate" />
+	<CustomAction Id="CustomSetDefaultPerMachineFolder" Property="CustomWixPerMachineFolder" Value="[ProgramFiles64Folder][ApplicationFolderName]" Execute="immediate" />
+	<CustomAction Id="CustomSetPerUserFolder" Property="APPLICATIONFOLDER" Value="[CustomWixPerUserFolder]" Execute="immediate" />
+	<CustomAction Id="CustomSetPerMachineFolder" Property="APPLICATIONFOLDER" Value="[CustomWixPerMachineFolder]" Execute="immediate" />
+
+	<InstallExecuteSequence>
+		<Custom Action="CustomSetDefaultPerUserFolder" Before="CostFinalize" />
+		<Custom Action="CustomSetDefaultPerMachineFolder" After="CustomSetDefaultPerUserFolder" />
+		<Custom Action="CustomSetPerUserFolder" After="CustomSetDefaultPerMachineFolder" Condition='ACTION="INSTALL" AND (ALLUSERS="" OR ALLUSERS=0 OR (ALLUSERS=2 AND (NOT Privileged)))'/>
+		<Custom Action="CustomSetPerMachineFolder" After="CustomSetPerUserFolder" Condition='ACTION="INSTALL" AND (ALLUSERS=1 OR (ALLUSERS=2 AND Privileged))'/>
+	</InstallExecuteSequence>
+	<InstallUISequence>
+		<Custom Action="CustomSetDefaultPerUserFolder" Before="CostFinalize" />
+		<Custom Action="CustomSetDefaultPerMachineFolder" After="CustomSetDefaultPerUserFolder" />
+		<Custom Action="CustomSetPerUserFolder" After="CustomSetDefaultPerMachineFolder" Condition='ACTION="INSTALL" AND (ALLUSERS="" OR ALLUSERS=0 OR (ALLUSERS=2 AND (NOT Privileged)))'/>
+		<Custom Action="CustomSetPerMachineFolder" After="CustomSetPerUserFolder" Condition='ACTION="INSTALL" AND (ALLUSERS=1 OR (ALLUSERS=2 AND Privileged))'/>
+	</InstallUISequence>
+	  
+	<UIRef Id="MainUI" />
+  </Package>
+</Wix>
